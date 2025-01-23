@@ -4,9 +4,9 @@ services:
     app:
         build:
             context: ./
-            dockerfile: dev.Dockerfile
-        image: aftab-alpine
-        container_name: aftab-panel
+            dockerfile: Dockerfile
+        image: snapp-alpine
+        container_name: snapp-panel
         restart: unless-stopped
         working_dir: /var/www/html
         tty: true
@@ -15,20 +15,20 @@ services:
         volumes:
             - ./:/var/www/html
         networks:
-            - aftab-ag
+            - snapp-ag
     db:
       image: mysql:9
-      container_name: aftab-db
+      container_name: snapp-db
       environment:
         - MYSQL_ROOT_PASSWORD=1234567
         - MYSQL_PASSWORD=123456
-        - MYSQL_DATABASE=aftab_db
-        - MYSQL_USER=aftab_db_user
+        - MYSQL_DATABASE=snapp_db
+        - MYSQL_USER=snapp_db_user
       volumes:
-        - aftab_db_data:/var/lib/mysql
+        - snapp_db_data:/var/lib/mysql
         - .docker/dev/config/mysqlconf:/etc/mysql/conf.d
       networks:
-        - aftab-ag
+        - snapp-ag
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
@@ -41,22 +41,22 @@ services:
       ports:
         - "8061:80"
       networks:
-        - aftab-ag
+        - snapp-ag
 
 #    redis:
 #        image: redis:alpine
-#        container_name: aftab-redis
+#        container_name: snapp-redis
 #        hostname: redis
 #        networks:
-#            - aftab-ag
+#            - snapp-ag
 #        healthcheck:
 #            test: [ "CMD", "redis-cli", "ping" ]
 #            retries: 3
 #            timeout: 5s
 
 networks:
-    aftab-ag:
+    snapp-ag:
 
 volumes:
-  aftab_db_data:
+  snapp_db_data:
 

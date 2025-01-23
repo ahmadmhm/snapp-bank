@@ -37,7 +37,7 @@ build:
 	docker compose -f $(COMPOSE_FILES) build --no-cache
 
 up:
-	docker compose -f $(COMPOSE_FILES) up -d
+	docker compose -f $(COMPOSE_FILES) up -d app
 
 down:
 	docker compose -f $(COMPOSE_FILES) down

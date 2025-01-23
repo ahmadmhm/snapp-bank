@@ -90,10 +90,6 @@ USER www-data
 WORKDIR /var/www/html
 COPY --chown=www-data ./ /var/www/html/
 
-RUN chmod 777 -R storage/ \
- && chmod 777 -R bootstrap/cache/ \
- && chmod 755 .docker/dev/docker-entrypoint.sh
-
 RUN composer install --no-autoloader
 
 # Expose the port nginx is reachable on
