@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+    app:
+        build:
+            context: ./
+            dockerfile: dev.Dockerfile
+        image: aftab-alpine
+        container_name: aftab-panel
+        restart: unless-stopped
+        working_dir: /var/www/html
+        tty: true
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - aftab-ag
+    db:
+      image: mysql:9
+      container_name: aftab-db
+      environment:
+        - MYSQL_ROOT_PASSWORD=1234567
+        - MYSQL_PASSWORD=123456
+        - MYSQL_DATABASE=aftab_db
+        - MYSQL_USER=aftab_db_user
+      volumes:
+        - aftab_db_data:/var/lib/mysql
+        - .docker/dev/config/mysqlconf:/etc/mysql/conf.d
+      networks:
+        - aftab-ag
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      depends_on:
+        - db
+      environment:
+        - PMA_HOST=db
+        - UPLOAD_LIMIT=64M
+      restart: unless-stopped
+      ports:
+        - "8061:80"
+      networks:
+        - aftab-ag
+
+#    redis:
+#        image: redis:alpine
+#        container_name: aftab-redis
+#        hostname: redis
+#        networks:
+#            - aftab-ag
+#        healthcheck:
+#            test: [ "CMD", "redis-cli", "ping" ]
+#            retries: 3
+#            timeout: 5s
+
+networks:
+    aftab-ag:
+
+volumes:
+  aftab_db_data:
+
