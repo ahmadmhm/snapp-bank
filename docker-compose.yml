@@ -39,7 +39,7 @@ services:
         - UPLOAD_LIMIT=64M
       restart: unless-stopped
       ports:
-        - "8061:80"
+        - "8081:80"
       networks:
         - snapp-ag
 
