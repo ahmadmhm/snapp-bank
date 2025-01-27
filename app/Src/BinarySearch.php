@@ -12,7 +12,7 @@ class BinarySearch
         $right = count($sortedArray) - 1;
         $resultIndex = $this->binarySearchRecursive($sortedArray, $targetValue, $left, $right);
         if ($resultIndex !== -1) {
-            print_r('The result is'.$resultIndex);
+            print_r('The result is '.$resultIndex);
         } else {
             print_r('The result is null');
         }
